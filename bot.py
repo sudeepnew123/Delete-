@@ -82,14 +82,20 @@ def webhook():
                 delete_message(chat_id, replied_msg_id)
                 delete_message(chat_id, my_msg_id)
 
-        # === /delall COMMAND ===
+        # === /delall COMMAND (self or reply based) ===
         if text == "/delall" and (int(user_id) == OWNER_ID or int(user_id) in auth_users):
-            if user_id in user_messages:
-                for msg_info in user_messages[user_id]:
+            # Agar kisi message ko reply kiya gaya hai
+            if 'reply_to_message' in msg:
+                target_user_id = str(msg['reply_to_message']['from']['id'])
+            else:
+                target_user_id = user_id
+
+            if target_user_id in user_messages:
+                for msg_info in user_messages[target_user_id]:
                     delete_message(msg_info["chat_id"], msg_info["message_id"])
-                user_messages[user_id] = []  # Clear after deleting
+                user_messages[target_user_id] = []  # Clear after deleting
                 save_user_messages(user_messages)
-                send_message(chat_id, "All your messages have been deleted.")
+                send_message(chat_id, "All messages deleted.")
             else:
                 send_message(chat_id, "No messages found to delete.")
 
