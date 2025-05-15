@@ -58,15 +58,15 @@ def webhook():
             return "ok", 200
 
         # === DELETE LOGIC ===
-if text in DELETE_EMOJIS and 'reply_to_message' in msg:
-    if user_id == OWNER_ID or user_id in auth_users:
-        replied_msg_id = msg['reply_to_message']['message_id']
-        my_msg_id = msg['message_id']
-        delete_message(chat_id, replied_msg_id)   # delete target message
-        delete_message(chat_id, my_msg_id)        # delete your emoji message too
+        if text in DELETE_EMOJIS and 'reply_to_message' in msg:
+            if user_id == OWNER_ID or user_id in auth_users:
+                replied_msg_id = msg['reply_to_message']['message_id']
+                my_msg_id = msg['message_id']
+                delete_message(chat_id, replied_msg_id)
+                delete_message(chat_id, my_msg_id)
 
-    return "ok", 200
-
+    return "ok", 200  # ye line yahin hona chahiye
+    
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
