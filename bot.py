@@ -99,6 +99,13 @@ def webhook():
             else:
                 send_message(chat_id, "No messages found to delete.")
 
+        # === /reset COMMAND (Only OWNER can use) ===
+        if text == "/reset" and int(user_id) == OWNER_ID:
+            save_auth_users([])  # Clear auth users
+            save_user_messages({})  # Clear stored messages
+            send_message(chat_id, "Bot reset successfully. All data cleared.")
+            return "ok", 200
+
     return "ok", 200
 
 if __name__ == "__main__":
