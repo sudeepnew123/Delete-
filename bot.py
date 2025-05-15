@@ -6,7 +6,7 @@ import os
 app = Flask(__name__)
 
 # === CONFIG ===
-BOT_TOKEN = "YOUR_BOT_TOKEN_HERE"
+BOT_TOKEN = os.environ.get("BOT_TOKEN")  # secure variable
 OWNER_ID = 6356015122
 TELEGRAM_API_URL = f"https://api.telegram.org/bot{BOT_TOKEN}/"
 DELETE_EMOJIS = ["💀", "❌", "🔥"]
