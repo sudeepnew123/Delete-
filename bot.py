@@ -64,3 +64,7 @@ def webhook():
                 delete_message(chat_id, replied_msg_id)
 
     return "ok", 200
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
